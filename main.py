@@ -148,8 +148,8 @@ def parserHtml(url):
 
 def genMsgText():
     msg = checkUpdate()
-    now = datetime.datetime.now()
-    st = datetime.datetime.strptime(msg["result"]["startTime"], "%Y-%m-%d %H:%M:%S")
+    now = datetime.datetime.now().date()
+    st = datetime.datetime.strptime(msg["result"]["startTime"], "%Y-%m-%d %H:%M:%S").date()
     days = (now - st).days
     if days < 7:
         t = time.strptime(msg["result"]["endTime"], "%Y-%m-%d %H:%M:%S")
