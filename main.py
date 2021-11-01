@@ -12,7 +12,7 @@ import requests as http
 from bs4 import BeautifulSoup
 
 startsStr = b""" <div class="section0 topindex">"""
-endStr = b'<script type="text/javascript" src="js/order.js"></script>'
+endStr = b"""<script type="text/javascript" src="js"""
 optionCond = "ABCDEF"
 condTemplate = "{num}. {check}"
 msgTemplate = """各位团支书，{title} 青年大学习已经开始了！务必及时通知到班级。注意：这次要求全班所有同学都要做！操作步骤与上次相同。注意：这次我们要收取班级里同学的截图并且在截图上写上名字，然后各个团支书将截图发给对应的组织部干事并且汇报人数情况，在这周日中午前（{day}）将截图和具体情况汇报给组织部相应干事。
@@ -22,15 +22,15 @@ msgTemplate = """各位团支书，{title} 青年大学习已经开始了！务�
 
 
 def writeStaffJson():
-    template = {"18": ["a1", "a2"], "19": ["b1", "b2"], "20": ["c1", "c2"], "21": ["d1", "d2"], "check": 0}
+    template = {"18": ["a1", "a2"], "19": ["b1", "b2"], "20": ["c1", "c2"], "21": ["d1", "d2"], "check": 0, "rotate": 0}
     data = json.dumps(template)
-    with open("staffs.json", "w") as f:
+    with open("staffs.json", "w", encoding="utf-8") as f:
         f.write(data)
     return data
 
 
 def checkStaff():
-    with open("staffs.json", "r") as f:
+    with open("staffs.json", "r", encoding="utf-8") as f:
         rd = f.read()
     staff = None
     try:
@@ -66,15 +66,21 @@ def genStaffList(staffs: dict):
     StaffList = ""
 
     for k in staffs:
-        if k == "check":
+        if k == "check" or k == "rotate":
             break
-        staff = "{period}级: 组织部 {people}\n".format(period=k, people=staffs[k][staffs["check"]])
+        staff = "{period}级: @组织部{people}\n".format(period=k, people=staffs[k][staffs["check"]])
         StaffList += staff
     return StaffList[:-1]
 
 
 def rewriteStaffList(staffs: dict):
     staffs["check"] ^= 1
+    staffs["rotate"] += 1
+    if staffs["rotate"] == 2:
+        staffs["18"], staffs["19"] = staffs["19"], staffs["18"]
+        staffs["20"], staffs["21"] = staffs["21"], staffs["20"]
+        staffs["rotate"] = 0
+
     with open("staffs.json", "w") as f:
         f.write(json.dumps(staffs))
 
@@ -140,13 +146,6 @@ def parserHtml(url):
     return output
 
 
-def testFunc():
-    data = http.get("https://h5.cyol.com/special/weixin/sign.json").json()
-    for d in data:
-        print(data[d]["url"])
-        print(parserHtml(data[d]["url"]))
-
-
 def genMsgText():
     msg = checkUpdate()
     now = datetime.datetime.now()
@@ -172,5 +171,6 @@ response, answer = genMsgText()
 print(response)
 print(answer)
 
-
-
+# crontab
+# 每周六、周日的1 : 10重启smb
+# 10 10-19 * * 1 /etc/init.d/smb restart
