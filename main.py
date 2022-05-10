@@ -11,9 +11,9 @@ import datetime
 import requests as http
 from bs4 import BeautifulSoup
 
-startsStr = b""" <div class="section0 topindex">"""
+startsStr = b"""<div class="section0 topindex">"""
 endStr = b"""<script type="text/javascript" src="js"""
-optionCond = "ABCDEF"
+optionCond = "ABCDEFG"
 condTemplate = "{num}. {check}"
 msgTemplate = """各位团支书，{title} 青年大学习已经开始了！务必及时通知到班级。注意：这次要求全班所有同学都要做！操作步骤与上次相同。注意：这次我们要收取班级里同学的截图并且在截图上写上名字，然后各个团支书将截图发给对应的组织部干事并且汇报人数情况，在这周日中午前（{day}）将截图和具体情况汇报给组织部相应干事。
 {staffList}
@@ -91,7 +91,7 @@ def parserHtml(url):
     tmp = []
     # print(content.decode())
     sindex = content.find(startsStr)
-    eindex = content.rfind(endStr)
+    eindex = content.rfind(endStr) - 4
     if sindex == -1 or eindex == -1:
         return []
     soup = BeautifulSoup(content[sindex:eindex], 'lxml', from_encoding='utf-8')
@@ -170,7 +170,3 @@ def genMsgText():
 response, answer = genMsgText()
 print(response)
 print(answer)
-
-# crontab
-# 每周六、周日的1 : 10重启smb
-# 10 10-19 * * 1 /etc/init.d/smb restart
