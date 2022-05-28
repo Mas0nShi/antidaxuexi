@@ -9,7 +9,7 @@ import setuptools
 
 setuptools.setup(
     name="antidxx",
-    version="0.0.2",
+    version='0.0.6',
     description="fast to generate homeworks notices.",
     author="Mas0n",
     author_email="fishilir@gmail.com",
@@ -20,6 +20,7 @@ setuptools.setup(
         "beautifulsoup4",
         "lxml"
     ],
+    include_package_data=True,
     keywords="青春浙江 大学习 daxuexi qczj answers",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -31,7 +32,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
     ],
-    packages=setuptools.find_packages(where='antidxx', exclude=(), include=('*',)),
+    packages=setuptools.find_packages(where='.', exclude=(), include=('*',)),
     package_data={
         "antidxx.template": ["message.txt", "sections.txt", "staffs.txt"]
     },
