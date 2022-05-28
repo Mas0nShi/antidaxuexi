@@ -9,7 +9,7 @@ import setuptools
 
 setuptools.setup(
     name="antidxx",
-    version="0.0.1",
+    version="0.0.2",
     description="fast to generate homeworks notices.",
     author="Mas0n",
     author_email="fishilir@gmail.com",
