@@ -1,0 +1,5 @@
+requests~=2.27.1
+mloguru~=0.0.2
+beautifulsoup4~=4.11.1
+setuptools~=60.2.0
+lxml~=4.8.0
