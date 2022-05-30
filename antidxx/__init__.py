@@ -94,7 +94,7 @@ def generate_staff_group() -> str:
     if Is_Rotate == "0":
         Template_Staffs.append(Template_Staffs.popleft())
     Is_Rotate = "1" if Is_Rotate == "0" else "0"
-    open(pjoin(Base, "template/staffs.txt"), "w").write('{staffs}\n{rot}'.format(staffs="\n".join(["|".join(staff) for staff in Template_Staffs]), rot=Is_Rotate))
+    open(pjoin(Base, "template/staffs.txt"), "w", encoding="utf-8").write('{staffs}\n{rot}'.format(staffs="\n".join(["|".join(staff) for staff in Template_Staffs]), rot=Is_Rotate))
     return "\n".join(staffs)
 
 
