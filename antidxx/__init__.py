@@ -13,7 +13,7 @@ from time import strftime as fmt_time, strptime as parse_time
 from bs4 import BeautifulSoup
 from collections import deque
 
-Version = '0.0.9'
+Version = '1.0.0'
 Nl_Join = lambda _s: '\n'.join(_s)
 Url_Task_List = "https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/common-api/course/current"
 
@@ -54,7 +54,8 @@ def generate_answers(uri: str) -> str:
     :param uri:
     :return:
     """
-    res = req.get(url=uri).text
+    # forced request m.html
+    res = req.get(url=uri if uri.endswith('m.html') else uri.replace('index.html', 'm.html')).text
     res = res[res.find(Regex_Start_Div):res.rfind(Regex_End_Div) - 4]
     bs = BeautifulSoup(res, 'lxml')
     answers = [[elm.get("data-a") for elm in div.find_all("div") if elm.get("data-a") is not None] for div in bs.find("body") if div != '\n']
@@ -94,8 +95,8 @@ def generate_staff_group() -> str:
     if Is_Rotate == "0":
         Template_Staffs.append(Template_Staffs.popleft())
     Is_Rotate = "1" if Is_Rotate == "0" else "0"
-    open(pjoin(Base, "template/staffs.txt"), "w", encoding="utf-8").write('{staffs}\n{rot}'.format(staffs="\n".join(["|".join(staff) for staff in Template_Staffs]), rot=Is_Rotate))
-    return "\n".join(staffs)
+    open(pjoin(Base, "template/staffs.txt"), "w", encoding="utf-8").write('{staffs}\n{rot}'.format(staffs=Nl_Join(["|".join(staff) for staff in Template_Staffs]), rot=Is_Rotate))
+    return Nl_Join(staffs)
 
 
 @logger.catch

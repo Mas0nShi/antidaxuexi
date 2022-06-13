@@ -1,6 +1,6 @@
-Peter|Milk
-Mike|John
 Jane|Queen
 Angel|K
 Jake|Bob
+Milk|Peter
+John|Mike
 0

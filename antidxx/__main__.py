@@ -5,11 +5,12 @@
 @Time: 2022/5/28 21:06
 @Desc: It's all about getting better.
 """
-from . import Version
+from antidxx import Version
+from antidxx import generate
 
 __version__ = Version
 
-from antidxx import generate
+
 
 
 def main():
