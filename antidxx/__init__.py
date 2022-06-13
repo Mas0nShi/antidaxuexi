@@ -13,7 +13,7 @@ from time import strftime as fmt_time, strptime as parse_time
 from bs4 import BeautifulSoup
 from collections import deque
 
-
+Version = '0.0.8'
 Nl_Join = lambda _s: '\n'.join(_s)
 Url_Task_List = "https://qczj.h5yunban.com/qczj-youth-learning/cgi-bin/common-api/course/current"
 
@@ -116,6 +116,7 @@ def generate(stdout=False) -> str:
             logger.success(msg)
     else:
         logger.info(f"this week's task has not yet been released.")
+        return "Fail"
     return msg
 
 

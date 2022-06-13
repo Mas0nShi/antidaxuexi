@@ -6,10 +6,11 @@
 @Desc: It's all about getting better.
 """
 import setuptools
+from antidxx import Version
 
 setuptools.setup(
     name="antidxx",
-    version='0.0.7',
+    version=Version,
     description="fast to generate homeworks notices.",
     author="Mas0n",
     author_email="fishilir@gmail.com",
