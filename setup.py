@@ -5,8 +5,11 @@
 @Time: 2022/5/28 21:01
 @Desc: It's all about getting better.
 """
+import loguru
 import setuptools
 from antidxx import Version
+
+loguru.logger.info(f"Package Version: {Version}")
 
 setuptools.setup(
     name="antidxx",
