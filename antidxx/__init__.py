@@ -60,15 +60,19 @@ def generate_answers(uri: str) -> str:
     bs = BeautifulSoup(res, 'lxml')
     answers = [[elm.get("data-a") for elm in div.find_all("div") if elm.get("data-a") is not None] for div in bs.find("body") if div != '\n']
     logger.trace(f'step 1: data getting: {answers}')
-    answers = deque([answer[:len(answers) // 2] for answer in answers if len(answers) > 4])
+    for i, answer in enumerate(answers):
+        if len(answer) > 4:
+            answers[i] = answer[:len(answer) // 2]
+    answers = deque(answers)
     logger.trace(f'step 2: data cleaning: {answers}')
     while not answers[0]:
         answers.popleft()
     required = []
     optional = []
-    while answers[0]:
+    while len(answers) != 0 and answers[0]:
         required.append(answers.popleft())
-    answers.popleft()
+    if len(answers) != 0:
+        answers.popleft()
     while answers:
         optional.append(answers.popleft())
     logger.trace(f'step 3: data splits: {required} / {optional}')
