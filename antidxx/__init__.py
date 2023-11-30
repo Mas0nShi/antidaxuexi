@@ -64,7 +64,7 @@ def generate_answers(uri: str) -> str:
             answers[i] = answer[:len(answer) // 2]
     answers = deque(answers)
     logger.trace(f'step 2: data cleaning: {answers}')
-    while not answers[0]:
+    while len(answers) != 0 and not answers[0]:
         answers.popleft()
     required = []
     optional = []
